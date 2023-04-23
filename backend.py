@@ -29,7 +29,9 @@ def benford(request):
         file_location = f"json/{uuid.uuid1()}file.json"
         with open(file_location, "w+") as f:
             json.dump(results, f)
-        return Response("Data conforms to Benford's Law. Check the JSON file for more details.")
+        return Response(json.dumps(results))
+
+
     else:
         return Response("Data does not conform to Benford's Law.")
 
