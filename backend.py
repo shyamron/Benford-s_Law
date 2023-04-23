@@ -33,7 +33,7 @@ def benford(request):
             json.dump(results, f)
         
 
-        response = Response(file_location)
+        response = Response(json.dumps(results).encode('utf-8'))
         response.headers['Content-Disposition'] = 'attachment; filename="data.json"'
         response.headers['Content-Type'] = 'application/json'
         # return Response(json.dumps(results)) #To display on screen
