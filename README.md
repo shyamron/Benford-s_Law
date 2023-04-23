@@ -8,6 +8,7 @@ TOOLS USED:
 1. Python with Pyramid framework
 2. HTML/CSS
 
+The UI is running on address localhost:6543/benford
 Files:
 1. gen_data.py is used to create csv file with 1 column and 30k rows with random data. Output- benford_data.csv
 2. non_benfords.csv does not satisfy Benford's Law.
