@@ -2,10 +2,12 @@ from wsgiref.simple_server import make_server
 from pyramid.config import Configurator 
 from pyramid.view import view_config
 from pyramid.renderers import render
-from pyramid.response import Response
+from pyramid.response import Response, FileResponse
 from benford_check import *
 import json
 import uuid
+from pyramid.renderers import render_to_response
+import io 
 
 @view_config(route_name="main")
 def home(request):
@@ -29,9 +31,13 @@ def benford(request):
         file_location = f"json/{uuid.uuid1()}file.json"
         with open(file_location, "w+") as f:
             json.dump(results, f)
-        return Response(json.dumps(results))
+        
 
-
+        response = Response(file_location)
+        response.headers['Content-Disposition'] = 'attachment; filename="data.json"'
+        response.headers['Content-Type'] = 'application/json'
+        # return Response(json.dumps(results)) #To display on screen
+        return response
     else:
         return Response("Data does not conform to Benford's Law.")
 
