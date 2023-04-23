@@ -5,13 +5,14 @@ from pyramid.renderers import render
 from pyramid.response import Response
 from benford_check import *
 import json
+import uuid
 
 @view_config(route_name="main")
 def home(request):
     html = render('view\home.html', {}, request=request)
     return Response(html)
 
-@view_config(route_name="benford", request_method="POST")
+@view_config(route_name="upload", request_method="POST")
 def benford(request):
     csvfile = request.POST['csvfile'].file
 
@@ -25,9 +26,10 @@ def benford(request):
     results, conform = check_benford(data_list)
 
     if conform==True:
-        with open("satisfied_benfords.json", "w") as f:
+        file_location = f"json/{uuid.uuid1()}file.json"
+        with open(file_location, "w+") as f:
             json.dump(results, f)
-        return Response(json.dumps(results))
+        return Response("Data conforms to Benford's Law. Check the JSON file for more details.")
     else:
         return Response("Data does not conform to Benford's Law.")
 
@@ -35,8 +37,8 @@ def benford(request):
 if __name__=="__main__":
     with Configurator() as config:
         config.include('pyramid_jinja2')
-        config.add_route('main', '/')
-        config.add_route('benford', '/benford')
+        config.add_route('main', '/benford')
+        config.add_route('upload', '/upload')
         config.scan()
         config.add_jinja2_renderer('.html')
         app = config.make_wsgi_app()
