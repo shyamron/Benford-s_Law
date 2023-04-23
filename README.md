@@ -17,7 +17,7 @@ Files:
 2. non_benfords.csv does not satisfy Benford's Law.
 3. view/home.html contains html code for frontpage UI.
 4. backend.py uses pyramid framework which calls check_benford() function from benford_check.py.
-5. benford_check.py checks is csv file has data that satisties Benford's law. Saves JSON file in json/ if it does.
+5. benford_check.py checks is csv file has data that satisties Benford's law. Saves JSON file in json/ if it does,also ,data.json file is downloaded on user's side.
 
 
 For futher details, see documentation-- https://drive.google.com/file/d/196SR3K8bumr_51BXsQtzGgxZwjyuJ0N1/view
